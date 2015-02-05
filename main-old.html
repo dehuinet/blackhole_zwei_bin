@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>敏行后台维护系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <base href="#">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+    </style>
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/digg_pagination.css" rel="stylesheet">
+    <link rel="shortcut icon" href="images/favicon.ico" />
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.ui.widget.js"></script>
+    <script src="js/jquery.iframe-transport.js"></script>
+    <script src="js/jquery.fileupload.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.pjax.js"></script>
+    <script src="js/bootstrap.bootbox.js"></script>
+    <script src="js/bootstrap.file-input.js"></script>
+    <script src="js/ajax.js"></script>
+  </head>
+
+  <body>
+<div id="main" >
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner" style="border-width:0px;background-image: linear-gradient(to bottom, #488fff, #2770db);">
+        <div class="container-fluid" >
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#" ><font color="#ffffff">敏行后台维护系统</font></a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+               <a href="logout" class="navbar-link"><font color="#ffffff">退出</font></a>
+            </p>
+            <p class="navbar-text pull-right">&nbsp;</p>
+            
+            <p class="navbar-text pull-right">
+              <font color="#ffffff">Logged in as</font> <a href="#" class="navbar-link"><font color="#ffffff">admin</font></a>
+            </p>
+            
+            <ul class="js-nav nav nav-pills guide-home" >
+              <li class="nav-index active" ><a href="#" style="background-color:#2a65b6;padding:8px 15px 8px;margin-top:4px">管理</a></li>
+             <!--  <li class="nav-index active"><input value="随机数  <%=Random.rand(99999)%>"/></li> -->
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3" >
+         
+            <ul class="nav nav-list nav-tabs nav-stacked" id="pjax-container">
+              <div class="user-avatar-wrap">
+                <a href="#settings/avatar"><img src="images/minxing.png" class="avatar "></a>
+                <a href="#users/1" title=" admin" class="prepend-mini username ellipsis font-large"><strong></strong></a>
+              </div>
+              <li class="nav-header"><i class="icon-home"></i>应用管理</li>
+              <li class="sub"><a class="manager"  href="/service_manager">服务管理</a></li>
+              <li class="sub"><a class="manager"  href="/license_manager">许可证管理</a></li>
+              
+              <li class="sub"><a class="manager"  href="/production_upload">产品更新</a></li>
+              <li class="sub"><a class="manager"  href="/data_backup">数据备份</a></li>
+              <li class="sub"><a class="manager"  href="/data_restore">数据恢复</a></li>
+              <li class="sub"><a class="manager"  href="/file_manager">文件管理</a></li>
+              
+            </ul>
+          
+        </div><!--/span-->
+        <div class="span9">
+          <div data-pjax class="table table-striped" id="main-container">
+            <!-- yield begin -->
+            
+            <!-- yield end -->
+          </div>
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; 敏行 2014</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+</div><!-- main -->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+    
+
+  </body>
+  <script type="text/javascript">
+jQuery(function($) {
+    $.pjax.defaults.timeout = 10000;
+    
+    $(".manager").off('click').on('click',function(e){
+      $("#main-container").load("html"+e.target.pathname+".html");
+      
+      $(".manager").each(function(m){
+          $(this).parent().removeClass("active");
+      });
+      $(this).parent().addClass("active");
+      
+      e.preventDefault();
+      
+    });
+    $(".manager")[0].click();//默认点击第一个
+    //$(document).pjax('[data-pjax] a','#main-container');
+  })
+  </script>
+
+</html>

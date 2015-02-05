@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>敏行后台维护系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <base href="#">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        font-family: "Microsoft Yahei",simsun,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 14px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+
+    </style>
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/digg_pagination.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link rel="shortcut icon" href="images/favicon.ico" />
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.ui.widget.js"></script>
+    <script src="js/jquery.iframe-transport.js"></script>
+    <script src="js/jquery.fileupload.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.pjax.js"></script>
+    <script src="js/bootstrap.bootbox.js"></script>
+    <script src="js/bootstrap.file-input.js"></script>
+    <script src="js/ajax.js"></script>
+  </head>
+
+  <body>
+<div id="main" >
+    <div class="navbar navbar-inverse navbar-fixed-top" style="height:100px;line-height:25px">
+      <div class="" style="border-width:0px;background-image: linear-gradient(to bottom, #4685e2, #2b72da);height:50px">
+        <div class="container-fluid" >
+          <!-- <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button> -->
+          <img src="images/logo.png" alt="公司logo" class="brand" style="margin-left:100px;line-height:60px;margin-top:-5px">
+          <a class="brand" href="#" ><font color="#ffffff" style="border-left:1px solid #96bef3">&nbsp;&nbsp;&nbsp;后台维护系统</font></a>
+          
+          <div class="nav-collapse collapse" style="margin-right:120px">
+            <p class="navbar-text pull-right" style="line-height:50px">
+               <a href="logout" class="navbar-link" ><font color="#ffffff">退出</font></a>
+            </p>
+            <p class="navbar-text pull-right">&nbsp;</p>
+            
+            <!-- <p class="navbar-text pull-right">
+              <font color="#ffffff">Logged in as</font> <a href="#" class="navbar-link"><font color="#ffffff">admin</font></a>
+            </p> -->
+            
+            <ul class="js-nav nav nav-pills guide-home" >
+              <!-- <li class="nav-index active" ><a href="#" style="background-color:#2a65b6;padding:8px 15px 8px;margin-top:4px">管理</a></li> -->
+             <!--  <li class="nav-index active"><input value="随机数  <%=Random.rand(99999)%>"/></li> -->
+            </ul>
+          </div><!--/.nav-collapse -->
+
+        </div>
+
+      </div>
+
+
+      <div  style="background-color:#eeeeee;margin-top:0px;height:44px">
+        <div class="span3"></div>
+        <div class="span1" style="margin-top:7px;border-right:1px solid #b4b4b4"><a class="topmgr" href="/manager"><img pathname="/manager" id="manager-src" src="images/manager-src-0.png">&nbsp;管理</a></div>
+        <div class="span1" style="margin-top:7px"><a class="topmgr" href="/statistic"><img id="statistic-src" src="images/statistic-src-0.png">&nbsp;统计</a></div>
+        <!-- <ul class="nav nav-pills span4  " style="background-color:#eeeeee;margin-top:0px;height:44px" >
+  
+          <li  class="sub act_focus" style="margin-top:5px"><a class="topmgr" href="/manager">管理</a></li>
+          <li  class="sub" style="margin-top:5px"><a class="topmgr" href="/statistic">统计</a></li>
+        </ul> -->
+        <div class="span4"></div>
+      </div>
+
+    </div>
+
+    <div class="container-fluid" style="margin-top:50px" >
+      <div id="top-main-container"></div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; 敏行 2014</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+</div><!-- main -->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+    
+
+  </body>
+  <link href="css/datepicker.css" rel="stylesheet">
+<script src="js/highcharts.js"></script>
+  <script src="js/chart.js"></script>
+   <script src="js/bootstrap-datepicker.js"></script>
+   <script src="js/bootstrap-datepicker.zh-CN.js"></script>
+  <script type="text/javascript">
+jQuery(function($) {
+    
+    
+    $(".topmgr").off('click').on('click',function(e){
+      var pathname = e.target.pathname;
+      if (pathname==undefined){
+        pathname = e.target.parentElement.pathname;
+      }
+      $("#top-main-container").load("html"+pathname+".html");
+      
+      $(".topmgr").each(function(m){
+          $(this).parent().removeClass("act_focus");
+          var id = $(this).find('img').attr('id');
+          $(this).find('img').attr('src','images/'+id+'-0.png');
+      });
+      $(this).parent().addClass("act_focus");
+      var id = $(this).find('img').attr('id');
+      $(this).find('img').attr('src','images/'+id+'-1.png');
+      
+      //$("#manager-src").attr('src','images/manager-1.png')
+      e.preventDefault();
+      
+    });
+
+    
+      $(".topmgr")[0].click();//默认点击第一个
+    
+    
+    //$(document).pjax('[data-pjax] a','#main-container');
+  })
+  </script>
+
+</html>

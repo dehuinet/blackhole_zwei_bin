@@ -1,0 +1,25 @@
+<div class="span9">
+  <textarea id="license_content" name="lisence_content" placeholder="许可证内容粘贴到这里准备上传" rows="13" style="width:570px"></textarea>
+   </div>
+   <div class="span3">
+   	<div class="control-group clearfix">
+   	 <a href="license" id="license_upload" class="btn ">上传</a>
+   	</div>
+   	<div class="control-group clearfix">
+           <a id="clean" href="" class="btn ">清空</a>
+       </div>
+   </div>
+
+<script type="text/javascript">
+
+$("#license_upload").off("click").on("click",function(e){
+    Ajax.post(e.target.pathname,{"base64_lic":$("#license_content").val()},function(res,response,xhr){
+    	alert(res);
+    });
+    e.preventDefault();
+  });
+$("#clean").off("click").on("click",function(e){
+    $("#license_content").val('');
+    e.preventDefault();
+  })
+</script>

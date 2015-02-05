@@ -1,0 +1,39 @@
+<article class="span11">
+  <div class="main-content" >
+    <div class="page-header" style="height:30px">
+      <span class="title" style="font-size:20px">许可证管理</span>
+      <div class="pull-right" >
+        
+       
+      </div>
+    </div>
+<div class="page-content compact">
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="/license_info" class="license">许可证信息</a>
+  </li>
+  <li><a href="/license_upload" class="license">上传许可证</a></li>
+</ul>
+<div id="license_container">
+
+</div>
+
+
+</article>
+
+<script type="text/javascript">
+jQuery(function($) {
+    
+    $(".license").off('click').on('click',function(e){
+      $("#license_container").load("html"+e.target.pathname+".html");
+      $(".license").each(function(m){
+          $(this).parent().removeClass("active");
+      });
+      $(this).parent().addClass("active");
+      
+      e.preventDefault();
+      
+    });
+    $(".license")[0].click();
+  })
+  </script>

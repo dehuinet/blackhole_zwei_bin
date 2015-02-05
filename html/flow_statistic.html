@@ -1,0 +1,82 @@
+
+<article class="span11">
+  <div class="main-content" >
+    <div class="page-header" style="height:30px">
+      <span class="title" style="font-size:20px">流量统计</span>
+      
+    </div>
+    
+<div class="page-content compact">
+
+<div class="body well row" style="border-width:0px;margin-left:0px">
+<div id="datepicker" class="prepend-top">
+    <!-- <input  id="start_date" placeholder="开始时间" value="" type="text">
+    <input  id="end_date" placeholder="结束时间" value="" type="text"> -->
+    <a id="search" class=" btn btn-primary button pull-right" >查询</a>
+    <select  id="interval" placeholder="结束时间" value="" class="pull-right append" style="width:100px;margin-right:10px">
+      <option value="by_minutes">分</option>
+      <option value="by_hours">小时</option>
+      <option value="by_days" selected>天</option>
+    </select>
+    
+</div>
+<div id="chart-container">
+  
+  
+</div>
+</div></div>
+</article>
+
+<script type="text/javascript">
+  $(function () {
+
+    // $("#datepicker input").datepicker({
+    //   format: "yyyy/mm/dd",
+    //   keyboardNavigation: false,
+    //   todayHighlight: true,
+    //   language: "zh-CN",
+    //   autoclose: true
+    // });
+
+    $("#search").off('click').on('click',function(ce){
+      var interval = $("#interval").val();
+      //alert(Date.UTC(15,'01',05,03,04));
+      Ajax.get('/api_requests',{'interval':interval},function(e){
+        var json = JSON.parse(e);
+        if(json.status == 'ok'){
+          var arr = new Array(5);
+          var ff = new Array(5);
+          ff[0] = '%y';
+          ff[1] = '%m';
+          ff[2] = '%d';
+          ff[3] = ' %H';
+          ff[4] = '%M';
+          format = '';
+          for(i=0;i<5;i++){
+            if (i*2 < json.start_at.length){
+              format+=ff[i];
+              arr[i] = json.start_at.substr(i*2,2);
+              if (i==0){
+                arr[i]=20+arr[i];
+              }else if (i==1){
+                arr[i]--;
+              }
+            }else{
+              arr[i] = 0;
+            }
+            
+          }
+
+          Chart.area ($('#chart-container'),json.data,Date.UTC(arr[0],arr[1],arr[2],arr[3],arr[4]),json.interval*1000,'流量统计','',format);
+        }else{
+          alert(e);
+        }
+      });
+    });
+    $("#search").click();
+
+    
+});
+
+
+</script>

@@ -1,0 +1,74 @@
+<article class="span11">
+  <div class="main-content" >
+    <div class="page-header" style="height:30px">
+      <span class="title" style="font-size:20px">产品更新</span>
+      
+    </div>
+    <div >
+        在进行"产品更新"操作前，请确保所有服务已经关闭。在"停止服务"页面可以关闭服务。如果不能确定服务是否关闭，可以在"服务状态"页面查看服务的状态。
+      </div>
+<div class="page-content compact">
+
+<div class="body well row" style="border-width:0px;margin-left:0px">
+<div class="span12">
+  <div class="control-group">
+     <div class="span2" style="margin-left:30px">上传新包：</div>
+     <div class="controls span2" style="margin-top:-5px">
+      <!-- <input type="file" data-filename-placement="inside" name="uploadfile" value = ""> -->
+       <form method="post">
+      <input id="fileupload" class="fileupload" type="file" name="fileupload" data-url="upgrade">
+      <!-- <a href="upgrade" id="production_upload" class="btn append" style="margin-top:-10px">开始</a> -->
+      </form>
+    </div>
+    <div id="uploading" class="span2"></div>
+    <div class="span10">
+      <div id="progress" class="progress progress-success">
+        <div class="bar" style="width: 0%;"></div>
+      </div>
+    </div>
+    <p id="upload_count" class="span1"></p>
+  </div>
+</div></article>
+<script type="text/javascript">
+$(function () {
+// $("#production_upload").off("click").on("click",function(e){
+    var fileupload = $('#fileupload').fileupload({
+        //type: 'post',
+        //dataType: 'json',
+        add: function (e, data) {
+          var a = $("#up_btn");
+            a.remove();
+            $("#upload_count").text('');
+            $('#progress .bar').css('width','0%');
+            data.context = $('<button id="up_btn"/>').text(data.files[0].name)
+                .click(function () {
+                    data.context = $('<p class="span2" id="up_btn"/>').text('正在上传...').replaceAll($(this));
+                    data.submit();
+                });
+
+            $("#uploading").after(data.context);
+            
+        },
+        done: function (e, data) {
+          //alert("done->"+e);
+            data.context.text('上传完成.');
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+            $("#upload_count").text(progress + '%');
+        },
+        success: function(e,data){
+          alert(e);
+        },
+        fail: function(e,data){
+          alert("fail->"+e);
+          data.context.text('上传失败.');
+        }
+    });
+    // e.preventDefault();
+   });
+</script>

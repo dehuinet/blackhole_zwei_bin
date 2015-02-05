@@ -1,0 +1,47 @@
+<article class="span11">
+  <div class="main-content" >
+    <div class="page-header" style="height:30px">
+      <span class="title" style="font-size:20px">数据备份</span>
+      
+    </div>
+    <div >
+        在进行"备份数据"操作前，请确保所有服务已经关闭。在"停止服务"页面可以关闭服务。如果不能确定服务是否关闭，可以在"服务状态"页面查看服务的状态。
+      </div>
+<div class="page-content compact">
+
+<div class="body well row" style="border-width:0px;margin-left:0px">
+<div class="span12">
+  <div class="control-group">
+     <div class="span2" style="margin-left:30px">恢复指定数据：</div>
+     <div class="controls span8" style="margin-top:-5px">
+      <input type="text" name="backup_name" id="backup_name">
+      <a href="datas/restore" id="restore" class="btn append" style="margin-top:-10px">开始</a>
+      <a href="datas/backup_list" id="backup_list" class="btn append" style="margin-top:-10px">备份列表</a>
+    </div>
+  </div>
+</div>
+<div class="control-group">
+    <div id="backup_info"  class="span6" style="margin-left:30px"></div>
+  </div>
+  <div class="control-group">
+    <div id="backup_list_info"  class="span6" style="margin-left:30px"></div>
+  </div>
+</article>
+<script type="text/javascript">
+  $("#restore").off("click").on("click",function(e){
+    e.preventDefault();
+    if($("#backup_name").val()==''){
+      alert("备份文件名不能为空");
+      return;
+    }
+    Ajax.post(e.target.pathname+"/"+$("#backup_name").val(),null,function(res, response, xhr){
+      $("#backup_info").text(res);
+    });
+  });
+  $("#backup_list").off("click").on("click",function(e){
+    e.preventDefault();
+    Ajax.get(e.target.pathname,null,function(res, response, xhr){
+      $("#backup_list_info").text(res);
+    });
+  });
+</script>

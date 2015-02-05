@@ -1,0 +1,40 @@
+<article class="span11">
+  <div class="main-content" >
+    <div class="page-header" style="height:30px">
+      <span class="title" style="font-size:20px">服务管理</span>
+      <div class="pull-right" >
+        <a href="services/start" class="btn btn-primary button append ctrl">启动</a>
+        <a href="services/stop" class="btn btn-primary button-red append ctrl">停止</a>
+        <a href="services/restart" class="btn btn-primary button append ctrl">重启</a>
+        <a href="services/status" class="btn btn-primary button status">状态</a>
+        <a href="" id="clean" class="btn btn-primary button-red">清空</a>
+       <!-- <a href="apps?q=<%=@q%>" class="btn ">返回</a>  -->
+      </div>
+    </div>
+<div class="page-content compact">
+
+<div class="body well row" style="border-width:0px;margin-left:0px">
+<div class="span7">
+  <textarea cols="100" id="console" name="console" placeholder="console" rows="15" style="width:710px"></textarea>
+   </div><!-- span6 -->
+</div></article>
+<script type="text/javascript">
+  $(".ctrl").off("click").on("click",function(e){
+    Ajax.post(e.target.pathname,null,function(res, response, xhr){
+      $("#console").append(res).append("\n");
+      $("#console").scrollTop($("#console")[0].scrollHeight); 
+    });
+    e.preventDefault();
+  });
+  $(".status").off("click").on("click",function(e){
+    Ajax.get(e.target.pathname,null,function(res, response, xhr){
+      $("#console").append(res).append("\n");
+      $("#console").scrollTop($("#console")[0].scrollHeight); 
+    });
+    e.preventDefault();
+  });
+  $("#clean").off("click").on("click",function(e){
+    $("#console").empty();
+    e.preventDefault();
+  })
+</script>

@@ -1,0 +1,36 @@
+<article class="span11">
+  <div class="main-content" >
+    <div class="page-header" style="height:30px">
+      <span class="title" style="font-size:20px">数据备份</span>
+      
+    </div>
+    <div >
+        在进行"备份数据"操作前，请确保所有服务已经关闭。在"停止服务"页面可以关闭服务。如果不能确定服务是否关闭，可以在"服务状态"页面查看服务的状态。
+      </div>
+<div class="page-content compact">
+
+<div class="body well row" style="border-width:0px;margin-left:0px">
+<div class="span7">
+  <div class="control-group">
+     <div class="span4" style="margin-left:30px">备份当前数据：</div>
+     <div class="controls span2" style="margin-top:-5px">
+      <a href="datas/backup" id="backup" class="btn pull-right">开始</a>
+    </div>
+  </div>
+  
+</div>
+<div class="control-group">
+    <div id="backup_info"  class="span6" style="margin-left:30px"></div>
+  </div>
+</div></div>
+</article>
+
+<script type="text/javascript">
+  $("#backup").off("click").on("click",function(e){
+    Ajax.post(e.target.pathname,null,function(res, response, xhr){
+      //alert(res);
+      $("#backup_info").text(res);
+    });
+    e.preventDefault();
+  })
+</script>
