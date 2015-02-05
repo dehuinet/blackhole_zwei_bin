@@ -10,8 +10,8 @@
 
 <div class="body well row" style="border-width:0px;margin-left:0px">
 <div id="datepicker" class="prepend-top">
-    <!-- <input  id="start_date" placeholder="开始时间" value="" type="text">
-    <input  id="end_date" placeholder="结束时间" value="" type="text"> -->
+    <input  id="start_date" placeholder="开始时间" value="" type="text">
+    <input  id="end_date" placeholder="结束时间" value="" type="text">
     <a id="search" class=" btn btn-primary button pull-right" >查询</a>
     <select  id="interval" placeholder="结束时间" value="" class="pull-right append" style="width:100px;margin-right:10px">
       <option value="by_minutes">分</option>
@@ -30,19 +30,59 @@
 <script type="text/javascript">
   $(function () {
 
-    // $("#datepicker input").datepicker({
-    //   format: "yyyy/mm/dd",
-    //   keyboardNavigation: false,
-    //   todayHighlight: true,
-    //   language: "zh-CN",
-    //   autoclose: true
-    // });
+  var options = {
+        format: "yyyy-mm-dd",
+        minView: 2,
+        language:  'zh-CN',
+        autoclose: 1,
+        todayHighlight: 1,
+        minuteStep: 1
+    };
+  $('#datepicker input').datetimepicker(options);
+
+    $("#interval").off('change').on('change',function(e){
+      var selected = $("#interval").find('option:selected').val();
+      $('#datepicker input').datetimepicker('remove');
+      if(selected=='by_minutes'){
+        options['format'] = "yyyy-mm-dd hh:ii";
+        options['minView'] = 0;
+        $('#datepicker input').datetimepicker(options);
+      }else if (selected=='by_hours'){
+        options['format'] = "yyyy-mm-dd hh:00";
+        options['minView'] = 1;
+        $('#datepicker input').datetimepicker(options);
+      }else{
+        options['format'] = "yyyy-mm-dd";
+        options['minView'] = 2;
+        $('#datepicker input').datetimepicker(options);
+      }
+    });
 
     $("#search").off('click').on('click',function(ce){
+      var stime = $("#start_date").val();
+      var etime = $("#end_date").val();
+      debugger;
+      if(stime=='' || etime == ''){
+        alert('时间范围不能为空！');
+        return;
+      }
+      var s = datetime_to_unix(stime);
+      var e = datetime_to_unix(etime);
+      if (s>e){
+        alert('开始时间不能大于结束时间！');
+        return;
+      }
+      var selected = $("#interval").find('option:selected').val();
+      if(selected=='by_minutes'){
+        e+=60;
+      }else if (selected=='by_hours'){
+        e+=3600;
+      }else{
+        e+=86400;
+      }
       var interval = $("#interval").val();
-      //alert(Date.UTC(15,'01',05,03,04));
-      Ajax.get('/api_requests',{'interval':interval},function(e){
-        var json = JSON.parse(e);
+      Ajax.get('/api_requests',{'interval':interval,'start_time':s,'end_time':e},function(e1){
+        var json = JSON.parse(e1);
         if(json.status == 'ok'){
           var arr = new Array(5);
           var ff = new Array(5);
@@ -69,14 +109,29 @@
 
           Chart.area ($('#chart-container'),json.data,Date.UTC(arr[0],arr[1],arr[2],arr[3],arr[4]),json.interval*1000,'流量统计','',format);
         }else{
-          alert(e);
+          alert(e1);
         }
       });
     });
-    $("#search").click();
+   // $("#search").click();
 
     
 });
 
+function datetime_to_unix(datetime){
+    var tmp_datetime = datetime.replace(/:/g,'-');
+    tmp_datetime = tmp_datetime.replace(/ /g,'-');
+    var arr = tmp_datetime.split("-");
+    var h = 0;
+    var m = 0;
+    if(arr.length>3){
+      h = arr[3];
+    }
+    if(arr.length>4){
+      m = arr[4];
+    }
+    var now = new Date(Date.UTC(arr[0],arr[1]-1,arr[2],h,m));
+    return parseInt(now.getTime()/1000);
+}
 
 </script>
