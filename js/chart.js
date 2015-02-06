@@ -1,7 +1,9 @@
 jQuery(function($) {
 	Chart = {
         area: function (elem,data,beginTime,pointInterval,title,sec_title,format){
-            elem.highcharts({
+            
+           
+        elem.highcharts({
 
         credits: {
           enabled: false
@@ -28,7 +30,8 @@ jQuery(function($) {
         yAxis: {
             title: {
                 text: '访问次数'
-            }
+            },
+            min: 0
         },
         legend: {
             enabled: false
@@ -55,6 +58,13 @@ jQuery(function($) {
             }
         },
 
+        // tooltip:{
+        //     // formatter: function (){
+        //     //     return this.x+":"+this.y;
+        //     // }
+        //     xDateFormat: '%Y-%m-%d %H:%m'
+        // },
+
         series: [{
             type: 'area',
             name: '次数',
@@ -63,6 +73,7 @@ jQuery(function($) {
             data: data
         }]
     });
+
         }
     }
 })

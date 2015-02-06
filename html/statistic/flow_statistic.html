@@ -10,8 +10,8 @@
 
 <div class="body well row" style="border-width:0px;margin-left:0px">
 <div id="datepicker" class="prepend-top">
-    <input  id="start_date" placeholder="开始时间" value="" type="text">
-    <input  id="end_date" placeholder="结束时间" value="" type="text">
+    <input  id="start_date" placeholder="开始时间" value="" type="text" readonly style="background-color:#fff;cursor:pointer">
+    <input  id="end_date" placeholder="结束时间" value="" type="text" readonly style="background-color:#fff;cursor:pointer">
     <a id="search" class=" btn btn-primary button pull-right" >查询</a>
     <select  id="interval" placeholder="结束时间" value="" class="pull-right append" style="width:100px;margin-right:10px">
       <option value="by_minutes">分</option>
@@ -41,6 +41,7 @@
   $('#datepicker input').datetimepicker(options);
 
     $("#interval").off('change').on('change',function(e){
+      $('#datepicker input').val('');
       var selected = $("#interval").find('option:selected').val();
       $('#datepicker input').datetimepicker('remove');
       if(selected=='by_minutes'){
@@ -61,7 +62,6 @@
     $("#search").off('click').on('click',function(ce){
       var stime = $("#start_date").val();
       var etime = $("#end_date").val();
-      debugger;
       if(stime=='' || etime == ''){
         alert('时间范围不能为空！');
         return;
@@ -81,7 +81,7 @@
         e+=86400;
       }
       var interval = $("#interval").val();
-      Ajax.get('/api_requests',{'interval':interval,'start_time':s,'end_time':e},function(e1){
+      Ajax.get('api_requests',{'interval':interval,'start_time':s,'end_time':e},function(e1){
         var json = JSON.parse(e1);
         if(json.status == 'ok'){
           var arr = new Array(5);
@@ -118,20 +118,11 @@
     
 });
 
-function datetime_to_unix(datetime){
-    var tmp_datetime = datetime.replace(/:/g,'-');
-    tmp_datetime = tmp_datetime.replace(/ /g,'-');
-    var arr = tmp_datetime.split("-");
-    var h = 0;
-    var m = 0;
-    if(arr.length>3){
-      h = arr[3];
-    }
-    if(arr.length>4){
-      m = arr[4];
-    }
-    var now = new Date(Date.UTC(arr[0],arr[1]-1,arr[2],h,m));
-    return parseInt(now.getTime()/1000);
+function datetime_to_unix(day){  
+    re = /(\d{4})(?:-(\d{1,2})(?:-(\d{1,2}))?)?(?:\s+(\d{1,2}):(\d{1,2}):(\d{1,2}))?/.exec(day);  
+    return new Date(re[1],(re[2]||1)-1,re[3]||1,re[4]||0,re[5]||0,re[6]||0).getTime()/1000;  
 }
+
+
 
 </script>

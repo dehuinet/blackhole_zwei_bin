@@ -14,7 +14,7 @@
             </ul>
           </div>
         </div><!--/span-->
-        <div class="span9" style="width:830px">
+        <div class="span9" style="width:65%">
           <div data-pjax class="table table-striped" id="main-container">
             <!-- yield begin -->
             
@@ -28,7 +28,7 @@ jQuery(function($) {
     //$.pjax.defaults.timeout = 10000;
     
     $(".manager").off('click').on('click',function(e){
-      $("#main-container").load("html"+e.target.pathname+".html");
+      $("#main-container").load("html/statistic"+e.target.pathname+".html");
       
       $(".manager").each(function(m){
           $(this).parent().removeClass("active");
