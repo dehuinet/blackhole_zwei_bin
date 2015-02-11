@@ -16,7 +16,7 @@
      <div class="controls span2" style="margin-top:-5px">
       <!-- <input type="file" data-filename-placement="inside" name="uploadfile" value = ""> -->
        <form method="post">
-      <input id="fileupload" class="fileupload" type="file" name="fileupload" data-url="upgrade">
+      <input title="选择文件" data-filename-placement="inside" id="fileupload" class="fileupload" type="file" name="fileupload" data-url="upgrade" >
       <!-- <a href="upgrade" id="production_upload" class="btn append" style="margin-top:-10px">开始</a> -->
       </form>
     </div>
@@ -29,8 +29,11 @@
     <p id="upload_count" class="span1"></p>
   </div>
 </div></article>
+<script src="js/jquery.fileupload.js"></script>
+<script src="js/bootstrap.file-input.js"></script>
 <script type="text/javascript">
 $(function () {
+  $('input[type=file]').bootstrapFileInput();
 // $("#production_upload").off("click").on("click",function(e){
     var fileupload = $('#fileupload').fileupload({
         //type: 'post',
@@ -40,7 +43,7 @@ $(function () {
             a.remove();
             $("#upload_count").text('');
             $('#progress .bar').css('width','0%');
-            data.context = $('<button id="up_btn"/>').text(data.files[0].name)
+            data.context = $('<button id="up_btn"/>').text("点击上传: "+data.files[0].name)
                 .click(function () {
                     data.context = $('<p class="span2" id="up_btn"/>').text('正在上传...').replaceAll($(this));
                     data.submit();

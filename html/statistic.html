@@ -10,11 +10,17 @@
               </div> -->
               <li class="nav-header" style="font-size:14px"><i class="icon-list"></i>统计</li>
               <li class="sub"><a class="manager"  href="/flow_statistic" style="height:30px;line-height:30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;流量统计</a></li>
+              <li class="sub"><a class="manager"  href="/active_user_statistic" style="height:30px;line-height:30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户活跃度统计</a></li>
+              <li class="sub"><a class="manager"  href="/message_and_im_statistic" style="height:30px;line-height:30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;工作圈和即时通讯统计</a></li>
+              <li class="sub"><a class="manager"  href="/device_type_statistic" style="height:30px;line-height:30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设备类型统计</a></li>
               
             </ul>
           </div>
         </div><!--/span-->
         <div class="span9" style="width:65%">
+          <div id="fullscreen" class="modal hide well" style="margin-left:0px;width:100%;height:100%;top:0px;left:0px">
+  
+          </div>
           <div data-pjax class="table table-striped" id="main-container">
             <!-- yield begin -->
             
@@ -22,19 +28,18 @@
           </div>
         </div><!--/span-->
       </div><!--/row-->
-
+<script src="js/chartArea.js"></script>
       <script type="text/javascript">
 jQuery(function($) {
     //$.pjax.defaults.timeout = 10000;
-    
     $(".manager").off('click').on('click',function(e){
-      $("#main-container").load("html/statistic"+e.target.pathname+".html");
-      
-      $(".manager").each(function(m){
+      $("#main-container").load("html/statistic"+e.target.pathname+".html",function(responseTxt,statusTxt,xhr){
+          ChartArea.full_screen();
+    });
+ $(".manager").each(function(m){
           $(this).parent().removeClass("active");
       });
       $(this).parent().addClass("active");
-      
       e.preventDefault();
       
     });

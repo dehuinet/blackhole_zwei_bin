@@ -1,0 +1,40 @@
+
+<article class="span11" id="main-article">
+  <div class="main-content" id="main-content">
+    <div class="page-header" style="height:30px">
+      <span class="title" style="font-size:20px">工作圈和即时通讯统计</span>
+      <a href="#" id="full_screen" class="btn pull-right" style="margin-right:30px">全屏</a>
+    </div>
+    
+<div class="page-content compact">
+
+<div class="body well row" style="border-width:0px;margin-left:0px">
+<div id="datepicker" class="prepend-top">
+    <input  id="start_date" placeholder="开始时间" value="" type="text" readonly style="background-color:#fff;cursor:pointer">
+    <input  id="end_date" placeholder="结束时间" value="" type="text" readonly style="background-color:#fff;cursor:pointer">
+    <a id="search" class=" btn btn-primary button pull-right" >查询</a>
+    
+    <select  id="interval" value="" class="pull-right append" style="width:100px;margin-right:10px">
+      <!-- <option value="by_minutes">分</option> -->
+      
+      <option value="by_days" selected>天</option>
+      <option value="by_weeks">周</option>
+      <option value="by_months">月</option>
+    </select>
+    
+</div>
+<div id="chart-container">
+  
+  
+</div>
+</div></div>
+</article>
+
+<!-- <script src="js/chartArea.js"></script> -->
+<script type="text/javascript">
+$(function () {
+  ChartArea.datetimePicker($('#datepicker input'),$("#interval"));
+  ChartArea.chartLines('/messages','工作圈和即时通讯统计','');
+
+});
+</script>

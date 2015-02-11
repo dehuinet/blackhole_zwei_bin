@@ -25,7 +25,7 @@
 jQuery(function($) {
     
     $(".license").off('click').on('click',function(e){
-      $("#license_container").load("html"+e.target.pathname+".html");
+      $("#license_container").load("html/manager"+e.target.pathname+".html");
       $(".license").each(function(m){
           $(this).parent().removeClass("active");
       });
