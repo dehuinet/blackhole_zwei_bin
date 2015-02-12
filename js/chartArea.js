@@ -52,7 +52,6 @@ jQuery(function($) {
       var interval = $("#interval").val();
       Ajax.get(url,{'interval':interval,'start_time':s,'end_time':e},function(e1){
         var json = JSON.parse(e1);
-        debugger;
         if(json.status == 'ok'){
           ts = convert_time_format(json.start_at);
           if(t_type=='area'){
@@ -61,7 +60,7 @@ jQuery(function($) {
             Chart.lines ($('#chart-container'),json.data,ts[0],json.interval*1000,title,'',ts[1]);
           }
         }else{
-          alert(e1);
+          $('#chart-container').html("<font color=red><b>"+json.errors.message+"</b><font>");
         }
       });
     });
@@ -73,6 +72,7 @@ jQuery(function($) {
         var json = JSON.parse(e1);
         
         //var json = [{"Name":"ios","Count":"5","Data":{"Name":"ios","Categories":["7.1.1","8.0","8.1","8.1.3"],"Datas":["1","2","1","1"]}},{"Name":"android","Count":"20","Data":{"Name":"android","Categories":["4.0.3","4.1.2","4.2.1","4.2.2","4.3","4.4.4"],"Datas":["1","4","3","9","2","1"]}}];
+        if (json.status=='ok'){
         var colors = Highcharts.getOptions().colors;
         datas = new Array();
         for(i=0;i<json.length;i++){
@@ -98,6 +98,9 @@ jQuery(function($) {
         }
 
         Chart.columns(datas,title,sub_title);
+      }else{
+        $('#chart-container').html("<font color=red><b>"+json.errors.message+"</b><font>");
+      }
       });
     },
 
@@ -157,7 +160,7 @@ jQuery(function($) {
           Chart.lines ($('#chart-container'),data,categories,title,sub_title,ts[1]);
           
         }else{
-          alert(e1);
+          $('#chart-container').html("<font color=red><b>"+json.errors.message+"</b><font>");
         }
       });
     });
@@ -192,7 +195,6 @@ jQuery(function($) {
 });
 //计算形如 1501 样式的年月组合 返回一个数组 记录从ym开始 偏移offset的年月 样式仍然是形如1501
 function offsetYM(ym,offset){
-  debugger;
   y = ym.substr(0,2);
   m = ym.substr(2,2);
   m = parseInt(m)+offset;
