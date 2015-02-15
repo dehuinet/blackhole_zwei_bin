@@ -72,7 +72,7 @@ jQuery(function($) {
         var json = JSON.parse(e1);
         
         //var json = [{"Name":"ios","Count":"5","Data":{"Name":"ios","Categories":["7.1.1","8.0","8.1","8.1.3"],"Datas":["1","2","1","1"]}},{"Name":"android","Count":"20","Data":{"Name":"android","Categories":["4.0.3","4.1.2","4.2.1","4.2.2","4.3","4.4.4"],"Datas":["1","4","3","9","2","1"]}}];
-        if (json.status=='ok'){
+        if (json.status!='error'){
         var colors = Highcharts.getOptions().colors;
         datas = new Array();
         for(i=0;i<json.length;i++){
