@@ -5,6 +5,8 @@
       <span class="title" style="font-size:20px">设备类型统计</span>
       <a id="search" class=" btn btn-primary button pull-right hide" >查询</a>
       <a href="#" id="full_screen" class="btn pull-right" style="margin-right:30px">全屏</a>
+      <input type="hidden" id="t_type">
+      <a href="#" id="t_type_btn" class="btn pull-right" style="margin-right:30px">饼图</a>
     </div>
     
 <div class="page-content compact">
@@ -22,9 +24,20 @@
 <!-- <script src="js/chartArea.js"></script> -->
 <script type="text/javascript">
 $(function () {
+  $("#t_type_btn").off('click').on('click',function(e){
+    if($("#t_type").val() == 'pie'){
+      $("#t_type").val('column');
+      $("#t_type_btn").text('饼图');
+    }else{
+      $("#t_type").val('pie');
+      $("#t_type_btn").text('柱图');
+    }
+    $("#search").click();
+    e.preventDefault();
+  });
   $("#search").off('click').on('click',function(e){
     //Chart.columns($("#chart-container"),data);
-    ChartArea.chartColumns('devices','设备类型统计','');
+    ChartArea.chartColumns('devices','设备类型统计','',$("#t_type").val());
   });
   $("#search").click();
   

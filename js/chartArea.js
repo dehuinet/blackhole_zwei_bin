@@ -65,9 +65,11 @@ jQuery(function($) {
       });
     });
    // $("#search").click();
+   default_7_days();
+
     },
 
-    chartColumns: function(url,title,sub_title){
+    chartColumns: function(url,title,sub_title,t_type){
       Ajax.get(url,null,function(e1){
         var json = JSON.parse(e1);
         
@@ -96,8 +98,12 @@ jQuery(function($) {
           data.drilldown = drilldown;
           datas.push(data);
         }
-
-        Chart.columns(datas,title,sub_title);
+        if(t_type=='pie'){
+           Chart.pie(datas,title,sub_title);
+        }else{
+          Chart.columns(datas,title,sub_title);
+        }
+        
       }else{
         $('#chart-container').html("<font color=red><b>"+json.errors.message+"</b><font>");
       }
@@ -164,6 +170,8 @@ jQuery(function($) {
         }
       });
     });
+    default_7_days();
+   
     },
 
     full_screen: function(){
@@ -187,12 +195,40 @@ jQuery(function($) {
         });
     }
 
+    
+
   }
 
   
 
     
 });
+
+function default_7_days(){
+      end = new Date().getTime();
+      start = end - 86400*7*1000;
+      $("#end_date").val(changeTimeFormat(end));
+      $("#start_date").val(changeTimeFormat(start));
+      //setTimeout(function(){
+        $("#search").click();
+      //},200);
+      
+    }
+
+
+function changeTimeFormat(time) {
+    var date = new Date(time);
+    var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+    var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+    // var hh = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+    // var mm = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+    // return date.getFullYear() + "-" + month + "-" + currentDate+" "+hh + ":" + mm;
+    return date.getFullYear() + "-" + month + "-" + currentDate
+    //返回格式：yyyy-MM-dd
+}
+
+
+
 //计算形如 1501 样式的年月组合 返回一个数组 记录从ym开始 偏移offset的年月 样式仍然是形如1501
 function offsetYM(ym,offset){
   y = ym.substr(0,2);

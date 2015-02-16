@@ -225,7 +225,7 @@ jQuery(function($) {
                 }).highcharts(); // return chart
             },//columns end
 
-            pie: function(data){
+            pie: function(data,title,sub_title){
                 var colors = Highcharts.getOptions().colors;
                 var categories = new Array();//['MSIE', 'Firefox', 'Chrome', 'Safari', 'Opera'],
                 for(i=0;i<data.length;i++){
@@ -243,10 +243,10 @@ jQuery(function($) {
                         type: 'pie'
                     },
                     title: {
-                        text: 'Browser market share, April, 2011'
+                        text: title
                     },
                     subtitle: {
-                        text: 'Click the columns to view versions. Click again to view brands.'
+                        text: sub_title
                     },
                     plotOptions: {
                         pie: {
@@ -281,8 +281,17 @@ jQuery(function($) {
                     tooltip: {
                         //pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
                         formatter: function(){
-                            return '<b>'+this.point.name+":</b>"+this.point.percentage.toFixed(1)+'%';
+                            debugger;
+                            s = '<b>'+this.point.name+":</b>"+this.point.percentage.toFixed(1)+'%<br>';
+                            if (this.point.drilldown) {
+                                s += '点击进入 '+ this.point.name +' 版本统计';
+                            } else {
+                                s += '点击返回设备统计';
+                            }
+                            return s;
+                            
                         }
+                        
                     },
                     series: [{
                         type:'pie',
