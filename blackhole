@@ -1,0 +1,106 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          blackhole
+# Required-Start:    $local_fs
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the blackhole server
+# Description:       starts blackhole using start-stop-daemon
+### END INIT INFO
+
+
+if [ -r /etc/profile.d/rvm.sh ]; then
+  . /etc/profile.d/rvm.sh
+fi
+
+export PATH=/sbin:/home/ewhine/upgrade:$PATH
+
+
+
+USER=ewhine
+DIR=/home/ewhine/deploy/blackhole_zwei
+DAEMON=$DIR/blackhole_zwei
+PIDFILE=$DAEMON.pid
+
+HTTPPORT=64040
+MXPID=
+RETVAL=0
+prog="blackhole"
+
+start () {
+  PID=`pidof blackhole_zwei`
+  if [ $? -eq 0 ]; then
+    echo "$prog has already been started!"
+    exit 0;
+  fi
+  echo -n "Starting $prog: "
+  start-stop-daemon --start --background --chuid $USER --chdir $DIR --make-pidfile --pidfile $PIDFILE --exec $DAEMON
+
+  RETVAL=$?
+  if [ $RETVAL -eq 0 ]; then
+    chown ${USER}:${USER} $PIDFILE
+    echo "ok"
+    exit 0;
+  else
+    echo "failed."
+    exit 1;
+  fi
+}
+
+stop () {
+  status2()
+  if [ $? -ne 0 ]; then
+    echo "$prog is not running!"
+    exit 0;
+  fi
+
+  echo -n "Stopping $prog: "
+  killall $DAEMON > /dev/null 2>&1
+  RETVAL=$?
+  if [ $RETVAL -eq 0 ] ; then
+    echo "ok"
+    exit 0;
+  else
+    echo "failed."
+    exit 1;
+  fi
+}
+
+status2 () {
+  pid=`pidof $DAEMON`
+  if [ $? -eq 0 ]; then
+    echo "$prog is running with pid $pid"
+    return 0;
+  else
+    echo "$prog is not running!"
+    return 1;
+  fi
+  return 2
+}
+
+restart () {
+  stop
+  start
+}
+
+# See how we were called.
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  status)
+    status2
+    ;;
+  restart|reload)
+    restart
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|status|restart|reload}"
+    exit 1
+esac
+
+exit $?
