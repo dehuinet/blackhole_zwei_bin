@@ -16,21 +16,29 @@
 <div class="body well row" style="border-width:0px;margin-left:0px">
 <div class="span7" style="width:100%">
   <!-- <textarea cols="100" id="console" name="console" placeholder="console" rows="15" style="width:97%"></textarea> -->
-  <pre id="console" name="console" style="width:97%"></pre>
+  <pre  style="width:97%">
+<div id="console" name="console"></div>
+<div class="loading loading-inner hide"  id="loading">
+  <div class="ico-loading span1" style="margin-left:280px"></div><div style="margin-top:-13px"><strong>正在加载...</strong></div>
+</div>
 </div><!-- span6 -->
 </div></article>
 <script type="text/javascript">
   $(".ctrl").off("click").on("click",function(e){
+    $("#loading").removeClass("hide");
     Ajax.post(e.target.pathname,null,function(res, response, xhr){
       $("#console").append(res).append("<br>");
       //$("#console").scrollTop($("#console")[0].scrollHeight); 
+      $("#loading").addClass("hide");
     });
     e.preventDefault();
   });
   $(".status").off("click").on("click",function(e){
+    $("#loading").removeClass("hide");
     Ajax.get(e.target.pathname,null,function(res, response, xhr){
       $("#console").append(res).append("<br>");
       //$("#console").scrollTop($("#console")[0].scrollHeight); 
+      $("#loading").addClass("hide");
     });
     e.preventDefault();
   });

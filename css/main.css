@@ -333,6 +333,18 @@ header {
     }
 }
 
+.loading  {
+    margin:-5px 5px;
+}
+
+.ico-loading {
+    background-image: url('../images/loading.gif');
+    background-repeat: no-repeat; 
+    width: 32px;
+    height: 32px;
+    vertical-align: text-top;
+}
+
 .main-panel {
     float: right;
     width: 770px;

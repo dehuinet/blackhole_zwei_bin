@@ -1,0 +1,60 @@
+<div class="container-narrow">
+
+      <div class="masthead">
+        
+        <h3 class="muted">第五步 创建社区</h3>
+      </div>
+
+      <hr>
+
+      <div class="jumbotron">
+         <h3>建立第一个社区</h3>
+      <div class="center span4">
+        <input type="text" class="input-block-level" placeholder="社区ID" id="network_id" >
+        <input type="text" class="input-block-level" placeholder="社区名称" id="network_name">
+</div>
+<div class="span10">
+创建社区后，系统会自动创建社区管理员账号，用社区管理员账号登陆就能创建用户使用系统了。
+</div>
+<div class="span10">
+<div id="adminname">社区管理员登录名：admin@社区ID</div>
+</div>
+<div class="span8">
+社区管理员密码：111111
+</div>
+
+      </div>
+    </div>
+    <script type="text/javascript">
+
+    jQuery(function($) {
+      enbleNextStep();
+	    $("#network_id").off('input').on('input',function(){
+	    	v = $("#network_id").val();
+	    	if (v == undefined ||v == ""){
+	    		v = "社区ID";
+	    	}
+	    	$("#adminname").html("社区管理员登录名：admin@"+v);
+	    })
+    })
+
+
+	function invoke(elem,p){
+		if($("#network_id").val()==undefined || $("#network_id").val()==''){
+			alert("社区ID不能为空");
+			return;
+		}
+		if($("#network_name").val()==undefined || $("#network_name").val()==''){
+			alert("社区名称不能为空");
+			return;
+		}
+		Ajax.post("../../network",{"network_id":$("#network_id").val(),"network_name":$("#network_name").val(),"step":getStep()},function(res,response,xhr){
+	   	  var json = JSON.parse(res);
+	      if(json.status=="200"){
+	      	nextStep(elem,p);
+	      }else{
+	      	alert(res);
+	      }
+	   });
+	}
+    </script>

@@ -1,0 +1,92 @@
+ 
+
+<div class="container-narrow">
+
+
+
+      <div class="masthead">
+        
+        <h3 class="muted">第三步 启动服务</h3>
+      </div>
+
+      <hr>
+
+      <div class="jumbotron">
+        <article class="span11">
+  <div class="main-content" >
+    <div class="page-header" style="height:30px;border-bottom: 0px solid #eee">
+      <div class="pull-right" >
+        <a href="services/start" class="btn btn-primary button append ctrl">启动</a>
+       <!-- <a href="apps?q=<%=@q%>" class="btn ">返回</a>  -->
+      </div>
+    </div>
+
+<!-- <div class="page-content compact"> -->
+
+<div class="body well row" style="border-width:0px;margin-left:0px">
+
+<div class="span7" style="width:100%">
+ 
+  <pre  style="width:97%">
+<div id="console" name="console"></div>
+<div class="loading loading-inner hide"  id="loading">
+  <div class="ico-loading span1" style="margin-left:280px"></div><div style="margin-top:-13px"><strong>正在加载...</strong></div>
+</div>
+
+  </pre>
+</div><!-- span6 -->
+<!-- </div> -->
+</div>
+</div>
+</article>
+      </div>
+<script type="text/javascript">
+	jQuery(function($) {
+		disableNextStep();
+	    $(".ctrl").off("click").on("click",function(e){
+	    	$("#loading").removeClass("hide");
+		    Ajax.post("../../first_start",null,function(res, response, xhr){
+		      $("#console").append(res).append("<br>");
+		      ping(0);
+		    });
+		    e.preventDefault();
+	  });
+	});
+
+
+  function ping (count){
+  	Ajax.get("/api/v1/ping",null,function(res, response, xhr){
+  		//ping成功 基本是不可能的 认证通不过
+  		$("#loading").addClass("hide");
+		$("#console").append("启动服务器已经成功！！！").append("<br>");
+		enbleNextStep();
+  	},function(res, response, xhr){
+  		$("#console").append("正在启动中，请稍后 "+count).append("<br>");
+		if(res.status == 502){
+			//nginx返回502 说明服务还没起来
+			if(count<10){
+				count++;
+				setTimeout(function(){
+					ping(count);
+				},2000);
+			}else{
+				$("#console").append("启动服务器超时！！！").append("<br>");
+			}
+		}else if(res.status == 404){
+			//没有这个服务？
+			$("#console").append("该服务不存在！！！").append("<br>");
+		}else {
+			//如果是别的 基本就是401 就算启动成功
+		    $("#loading").addClass("hide");
+		    $("#console").append("启动服务器已经成功！！！").append("<br>");
+		    enbleNextStep();
+		}
+	});
+  }
+
+
+
+  function invoke(elem,p){
+    nextStep(elem,p);
+  }
+</script>

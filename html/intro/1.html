@@ -1,0 +1,32 @@
+<div class="container-narrow">
+
+      <div class="masthead">
+        
+        <h3 class="muted">第一步 欢迎</h3>
+      </div>
+
+      <hr>
+
+      <div class="jumbotron">
+        <h1>欢迎使用敏行初始化向导</h1>
+        <p class="lead">该向导仅在第一次使用敏行系统出现，该向导将帮助您建立第一个敏行社区</p>
+        
+      </div>
+    </div>
+    <script type="text/javascript">
+    jQuery(function($) {
+      enbleNextStep();
+    })
+
+    function invoke(elem,p){
+
+      Ajax.post("../../welcome",{"step":getStep()},function(res,response,xhr){
+          var json = JSON.parse(res);
+          if(json.status=="200"){
+            nextStep(elem,p);
+          }else{
+            alert(res);
+          }
+       });
+    }
+    </script>
