@@ -26,6 +26,11 @@ HTTPPORT=64040
 RETVAL=0
 prog="blackhole"
 
+if [ ! -f $PIDFILE ]; then
+  touch $PIDFILE
+  chown ${USER}:${USER} $PIDFILE
+fi
+
 start () {
   PID=`pidof blackhole_zwei`
   if [ $? -eq 0 ]; then
