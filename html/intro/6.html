@@ -20,9 +20,12 @@
     })
 	function invoke(elem,p){
 	   //nextStep(elem,p);
-	   Ajax.post("../../restart",null,function(res,response,xhr){
-	   	  //重启blackhole
-	   });
-	   window.location.href="/";
-	}
+    Ajax.post("../../restart",null,
+        function(res,response,xhr){
+          window.location.href="/";
+        },
+        function(res2, response2, xhr2){
+          alert(response2)
+        });
+  }
 </script>
