@@ -14,7 +14,13 @@
 
 $("#license_upload").off("click").on("click",function(e){
     Ajax.post(e.target.pathname,{"base64_lic":$("#license_content").val()},function(res,response,xhr){
-    	alert(res);
+      json = JSON.parse(res);
+      if(json.status == 'ok'){
+        alert("许可证上传成功");
+      }else{
+        alert(json.errors.message);
+      }
+    	
     });
     e.preventDefault();
   });
