@@ -6,63 +6,8 @@
  </div>
 
 <div class="body well row" style="border-width:0px;margin-left:0px" id="license_content">
-  <!-- <div class="control-group clearfix">
-    <div class="span4" style="margin-left:30px"> Version：</div>
-    <div class="controls" id="version">
-      
-    </div>
- </div>
- <div class="control-group clearfix">
-    <div class="span4" style="margin-left:30px"> Expire Date：</div>
-    <div class="controls" id="expireDate">
-      
-    </div>
- </div>
- <div class="control-group clearfix">
-    <div class="span" style="margin-left:30px"> User limit：</div>
-    <div class="controls" id="userlimit">
-      
-    </div>
- </div>
- <div class="control-group clearfix">
-    <div class="span4" style="margin-left:30px"> Group Message Expire Date：</div>
-    <div class="controls" id="GMexpireDate">
-      
-    </div>
- </div>
- <div class="control-group clearfix">
-    <div class="span4" style="margin-left:30px"> Private Message Expire Date：</div>
-    <div class="controls" id="PMexpireDate">
-      
-    </div>
- </div>
- <div class="control-group clearfix">
-    <div class="span4" style="margin-left:30px"> MXPP Expire Date：</div>
-    <div class="controls" id="MXPPexpireDate">
-      
-    </div>
- </div>
- <div class="control-group clearfix">
-    <div class="span4" style="margin-left:30px">Appstore Expire Date：</div>
-    <div class="controls" id="appStoreexpireDate">
-      
-    </div>
- </div>
- <div class="control-group clearfix">
-    <div class="span4" style="margin-left:30px">PC Client Expire Date：</div>
-    <div class="controls" id="PCexpireDate">
-      
-    </div>
- </div>
- <div class="control-group clearfix">
-    <div class="span4" style="margin-left:30px">Network limit： </div>
-    <div class="controls" id="networkLimit">
-      
-    </div>
-    
- </div> -->
  
-<div class="controls">
+    <div class="controls">
       <a href="license" id="license_info" class="btn pull-right">刷新</a>
     </div>
    
@@ -85,25 +30,6 @@
             field.find("#name").html(info[0]);
             field.find("#value").html(info[1]);
             $("#license_content").append(field);
-            // if(info[0]=='Version'){
-            //   $("#version").html(info[1]);
-            // }else if(info[0]=='Expire Date'){
-            //   $("#expireDate").html(info[1]);
-            // }else if(info[0]=='User limit'){
-            //   $("#userlimit").html(info[1]);
-            // }else if(info[0]=='Group Message Expire Date'){
-            //   $("#GMexpireDate").html(info[1]);
-            // }else if(info[0]=='Private Message Expire Date'){
-            //   $("#PMexpireDate").html(info[1]);
-            // }else if(info[0]=='MXPP Expire Date'){
-            //   $("#MXPPexpireDate").html(info[1]);
-            // }else if(info[0]=='Appstore Expire Date'){
-            //   $("#appStoreexpireDate").html(info[1]);
-            // }else if(info[0]=='PC Client Expire Date'){
-            //   $("#PCexpireDate").html(info[1]);
-            // }else if(info[0]=='Network limit'){
-            //   $("#networkLimit").html(info[1]);
-            // }
           }
         }else{
           alert(res);
