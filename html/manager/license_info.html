@@ -16,7 +16,7 @@
   $("#license_info").off("click").on("click",function(e){
     Ajax.get(e.target.pathname,null,function(res, response, xhr){
       // debugger;
-      //res = "Version: 5.0.1.089.release\nExpire Date: 15-08-05 15:46\nUser limit: 500\nGroup Message Expire Date: 20150717\nPrivate Message Expire Date: 20150717\nMXPP Expire Date: 20150717\nAppstore Expire Date: 20150717\nPC Client Expire Date: 20150717\nNetwork limit: 5";
+      //res = "Version: 5.0.1.089.release\nExpire Date: 15-08-05 15:46\nUser limit: 500\nGroup Message Expire Date: 20150717\nPrivate Message Expire Date: 20150717\nMXPP Expire Date: 20150717\nAppstore Expire Date: 20150717\nPC Client Expire Date: 20150717\nNetwork limit: 5\n\n";
       $("#license_content").find(".license_field").each(function(e){
         e.remove();
       });
@@ -24,12 +24,14 @@
         infos = res.split('\n');
         if(infos[0].indexOf("Version")==0){
           for(i = 0;i<infos.length;i++){
-            info = infos[i].split(': ')
-            var field = $("#field_temp").clone(true);
-            field.removeClass("hide");
-            field.find("#name").html(info[0]);
-            field.find("#value").html(info[1]);
-            $("#license_content").append(field);
+            if(infos[i]!=''){
+              info = infos[i].split(': ')
+              var field = $("#field_temp").clone(true);
+              field.removeClass("hide");
+              field.find("#name").html(info[0]+" :");
+              field.find("#value").html(info[1]);
+              $("#license_content").append(field);
+            }
           }
         }else{
           alert(res);
