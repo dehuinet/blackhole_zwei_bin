@@ -35,7 +35,7 @@
   });
   $(".status").off("click").on("click",function(e){
     $("#loading").removeClass("hide");
-    Ajax.get(e.target.pathname,null,function(res, response, xhr){
+    Ajax.get(e.target.pathname+"?r="+Math.floor(Math.random()*1000000000),null,function(res, response, xhr){
       $("#console").append(res).append("<br>");
       //$("#console").scrollTop($("#console")[0].scrollHeight); 
       $("#loading").addClass("hide");
