@@ -1,0 +1,41 @@
+<article class="span11">
+  <div class="main-content" >
+    <div class="page-header" style="height:30px">
+      <span class="title" style="font-size:20px">升级日志</span>
+      
+    </div>
+    <div >
+			本页面可以用于查看后台维护系统产生的最后的日志。如需更多，请直接下载日志文件。
+			如果上传中出现 file->[object]字样的提示，说明HTTP超时，但不一定代表更新失败。此时，请在本页面中查询日志，以进一步确认更新是否成功。
+      </div>
+<div class="page-content compact">
+
+<div class="body well row" style="border-width:0px;margin-left:0px">
+<div class="span12">
+  <div class="control-group">
+     <div class="controls span8" style="margin-top:-5px">
+      <a href="log/tail" id="tail" class="btn append" style="margin-top:-10px">只看末尾</a>
+      <a href="log/all" id="all" download='blackhole.log' class="btn append" style="margin-top:-10px">完整日志</a>
+    </div>
+  </div>
+</div>
+<hr />
+<div class="control-group">
+	<pre>
+<!--    <div id="console"  class="span6" style="margin-left:30px"></div>-->
+		<div id="console" name="console"></div>
+	</pre>
+  </div>
+  <div class="control-group">
+    <div id="backup_list_info"  class="span6" style="margin-left:30px"></div>
+  </div>
+</article>
+<script type="text/javascript">
+  $("#tail").off("click").on("click",function(e){
+    e.preventDefault();
+    Ajax.get(e.target.pathname,null,function(res, response, xhr){
+	//	Ajax.post(e.target.pathname+"/"+$("#backup_name").val(),null,function(res, response, xhr){
+      $("#console").text(res).append("<br />");
+    });
+  });
+</script>
