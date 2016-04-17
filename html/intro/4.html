@@ -30,6 +30,10 @@
 			alert("请填写密码");
 			return;
 		}
+		if(passwd.length < 6){
+			alert("密码不能少于6位！");
+			return;
+		}
 		if(passwd!=repeat){
 			alert("两次输入的密码不一样");
 			return;
