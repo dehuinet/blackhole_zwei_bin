@@ -75,6 +75,9 @@
 		}else if(res.status == 404){
 			//没有这个服务？
 			$("#console").append("该服务不存在！！！").append("<br>");
+		}else if(res.status == 302){
+			//没有这个服务？
+			$("#console").append("无法判断是否启动成功，请刷新本页面后重试").append("<br>");
 		}else {
 			//如果是别的 基本就是401 就算启动成功
 		    $("#loading").addClass("hide");
