@@ -64,7 +64,7 @@
   		$("#console").append("正在启动中，请稍后 "+count).append("<br>");
 		if(res.status == 502){
 			//nginx返回502 说明服务还没起来
-			if(count<10){
+			if(count<30){
 				count++;
 				setTimeout(function(){
 					ping(count);
